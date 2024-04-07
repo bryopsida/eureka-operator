@@ -1,7 +1,0 @@
-apt:
-  sources:
-    nodejs:
-      source: deb [signed-by=$KEY_FILE] https://deb.nodesource.com/node_20.x $RELEASE main
-      keyid: 9FD3B784BC1C6FC31A8A0A1C1655A0AB68576280
-packages:
-  - nodejs

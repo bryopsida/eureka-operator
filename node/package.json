@@ -1,0 +1,17 @@
+{
+  "name": "@bryopsida/eureka-operator",
+  "version": "0.1.0",
+  "description": "",
+  "main": "app.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Unlicense",
+  "dependencies": {
+    "@bryopsida/eureka": "^0.1.0"
+  },
+  "devDependencies": {
+    "standard": "^17.1.0"
+  }
+}
