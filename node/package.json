@@ -8,14 +8,14 @@
   "scripts": {
     "start": "pm2 start",
     "stop": "pm2 stop",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "standard",
+    "lint:fix": "standard --fix"
   },
   "author": "",
   "license": "Unlicense",
   "dependencies": {
-    "@bryopsida/eureka": "^0.1.0",
-    "commander": "^12.0.0",
-    "pm2": "^5.3.1"
+    "@bryopsida/eureka": "^0.1.0"
   },
   "devDependencies": {
     "standard": "^17.1.0"
