@@ -6,9 +6,7 @@
   "bin": "eureka-operator",
   "type": "module",
   "scripts": {
-    "start": "pm2 start",
-    "stop": "pm2 stop",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon --inspect app.mjs",
     "lint": "standard",
     "lint:fix": "standard --fix"
   },
@@ -18,6 +16,7 @@
     "@bryopsida/eureka": "^0.1.0"
   },
   "devDependencies": {
+    "nodemon": "^3.1.0",
     "standard": "^17.1.0"
   }
 }
