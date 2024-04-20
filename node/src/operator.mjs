@@ -1,5 +1,5 @@
-import { OperatorConfig } from './operator-config.mjs'
-import { EurekaOperatorComms } from './comms.mjs'
+import { OperatorConfig } from './state/operator-config.mjs'
+import { EurekaOperatorComms } from './transports/multicast-comms.mjs'
 
 export class EurekaOperator {
   constructor (options) {

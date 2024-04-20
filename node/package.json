@@ -2,13 +2,15 @@
   "name": "@bryopsida/eureka-operator",
   "version": "0.1.0",
   "description": "",
-  "main": "app.mjs",
+  "main": "src/app.mjs",
   "bin": "eureka-operator",
   "type": "module",
   "scripts": {
-    "start:dev": "nodemon --inspect app.mjs",
+    "start:dev": "nodemon --inspect src/app.mjs",
     "lint": "standard",
-    "lint:fix": "standard --fix"
+    "lint:fix": "standard --fix",
+    "build:js": "npx esbuild src/app.mjs --bundle --outfile=dist/app.cjs --format=cjs --platform=node",
+    "build:sea": "node tools/buildSea.mjs"
   },
   "author": "",
   "license": "Unlicense",
@@ -16,6 +18,7 @@
     "@bryopsida/eureka": "^0.1.0"
   },
   "devDependencies": {
+    "esbuild": "^0.20.2",
     "nodemon": "^3.1.0",
     "standard": "^17.1.0"
   }
