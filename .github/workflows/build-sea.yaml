@@ -1,9 +1,5 @@
 on:
   workflow_call:
-    inputs:
-      config-path:
-        required: true
-        type: string
 jobs:
   # need to build the dist
   # pack everything needed into a folder
