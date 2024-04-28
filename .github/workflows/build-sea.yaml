@@ -24,15 +24,17 @@ jobs:
           cache: 'npm'
           cache-dependency-path: node/package-lock.json
       - name: Build JS Bundle
+        working-directory: node
         run: npm run build:js
       - name: Build artifact for SEA build process
-        run: node/tools/buildSea.mjs
+        working-directory: node
+        run: tools/buildSea.mjs
       - name: Upload artifact
         id: upload
         uses: actions/upload-artifact@v4
         with:
           name: sea-input
-          path: sea-input-artifact
+          path: node/sea-input-artifact
           if-no-files-found: 'error'
       # free github hosted runners do not include arm64 arch runners
       # invoke a workflow with access to self hosted runners that
