@@ -1,3 +1,4 @@
+name: Test build SEA workflow
 on:
   workflow_dispatch:
 jobs:

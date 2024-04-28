@@ -1,3 +1,4 @@
+name: Build SEA
 on:
   workflow_call:
 jobs:
