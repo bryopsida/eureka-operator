@@ -1,0 +1,31 @@
+on:
+  workflow_call:
+    inputs:
+      config-path:
+        required: true
+        type: string
+    secrets: inherit
+jobs:
+  # need to build the dist
+  # pack everything needed into a folder
+  # upload folder
+  # invoke workflow to run build on arm64 runner
+  # wait for workflow
+  # download artifacts from workflow and extract
+  # capture as artifacts for this repo
+  build-single-executable-application:
+    runs-on:
+      - ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # free github hosted runners do not include arm64 arch runners
+      # invoke a workflow with access to self hosted runners that
+      # can build for desired arm64 targets, currently only linux
+      - uses: bryopsida/workflow-dispatch@main
+        with:
+          workflow: build-sea.yaml
+          token: ${{ secrets.ON_PREM_REPO_PAT }}
+          wait-for-completion: true
+          repo: on-prem-flows
+          ref: main
+          workflow-logs: print
