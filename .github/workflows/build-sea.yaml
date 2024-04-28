@@ -25,6 +25,7 @@ jobs:
           workflow: build-sea.yaml
           token: ${{ secrets.ON_PREM_REPO_PAT }}
           wait-for-completion: true
-          repo: on-prem-flows
+          repo: bryopsida/on-prem-flows
           ref: main
           workflow-logs: print
+          inputs: '{"artifact-name": "test", "artifact-repo": "bryopsida/eureka-operator", "artifact-run-id": "test"}'
