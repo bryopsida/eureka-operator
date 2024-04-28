@@ -3,3 +3,4 @@ on:
 jobs:
   test-build-sea:
     uses: ./.github/workflows/build-sea.yaml
+    secrets: inherit

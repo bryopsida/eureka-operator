@@ -4,7 +4,6 @@ on:
       config-path:
         required: true
         type: string
-    secrets: inherit
 jobs:
   # need to build the dist
   # pack everything needed into a folder
