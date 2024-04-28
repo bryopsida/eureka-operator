@@ -17,7 +17,7 @@ jobs:
     runs-on:
       - ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       # free github hosted runners do not include arm64 arch runners
       # invoke a workflow with access to self hosted runners that
       # can build for desired arm64 targets, currently only linux
