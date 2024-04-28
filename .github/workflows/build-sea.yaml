@@ -1,6 +1,9 @@
 name: Build SEA
 on:
   workflow_call:
+    secrets:
+      ON_PREM_REPO_PAT:
+        required: true
 jobs:
   # need to build the dist
   # pack everything needed into a folder
