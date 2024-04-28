@@ -16,7 +16,24 @@ jobs:
     runs-on:
       - ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - name: Setup Node And Cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: node/package-lock.json
+      - name: Build JS Bundle
+        run: npm run build:js
+      - name: Build artifact for SEA build process
+        run: node/tools/buildSea.mjs
+      - name: Upload artifact
+        id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: sea-input
+          path: sea-input-artifact
+          if-no-files-found: 'error'
       # free github hosted runners do not include arm64 arch runners
       # invoke a workflow with access to self hosted runners that
       # can build for desired arm64 targets, currently only linux
