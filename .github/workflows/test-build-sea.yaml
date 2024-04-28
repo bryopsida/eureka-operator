@@ -2,4 +2,4 @@ on:
   workflow_dispatch:
 jobs:
   test-build-sea:
-    uses: ./.github/workflows/build-sea.yml
+    uses: ./.github/workflows/build-sea.yaml
