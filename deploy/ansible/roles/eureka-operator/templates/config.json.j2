@@ -1,0 +1,22 @@
+{
+  "server": {
+    "port": {{ eureka_operator_port }},
+    "multicastGroups": [
+      "{{ eureka_operator_multicast }}"
+    ]
+  },
+  "crypto": {
+    "salt": "{{ eureka_operator_salt }}",
+    "password": "{{ eureka_operator_password }}"
+  },
+  "beaconInterval": 60000,
+  "beacon": {
+    "id": "eureka-op-{{ ansible_machine_id }}"
+    {%- if eureka_operator_pro_token is defined -%}
+    ,"ubuntu":{"pro":"{{ eureka_operator_pro_token }}"}
+    {%- endif -%}
+    {%- if eureka_operator_apt_packages is defined -%}
+    ,"apt": {{ eureka_operator_apt_packages | to_json }}
+    {%- endif %}
+  }
+}

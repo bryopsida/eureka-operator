@@ -1,0 +1,31 @@
+#include <tunables/global>
+
+profile eureka-operator {{ eureka_operator_service_folder }}/app.cjs {
+    #include <abstractions/base>
+    
+    capability setuid,
+    capability setgid,
+
+    /usr/bin/env r,
+    /usr/bin/env ix,
+    /usr/bin/node r,
+    /usr/bin/node ix,
+
+    /usr/bin/pro r,
+    /usr/bin/ubuntu-advantage r,
+    /usr/bin/dpkg r,
+    /usr/bin/apt-get r,
+    /usr/bin/pro Ux,
+    /usr/bin/ubuntu-advantage Ux,
+    /usr/bin/dpkg Ux,
+    /usr/bin/apt-get Ux,
+    
+    /run/systemd/resolve/stub-resolv.conf r,
+    /etc/nsswitch.conf r,
+    /sys/fs/cgroup/system.slice/eureka-operator.service/** r,
+
+
+    {{ eureka_operator_service_folder }}/** r,
+    {{ eureka_operator_service_folder }}/config/** rw,
+    {{ eureka_operator_service_folder }}/app.cjs px,
+}

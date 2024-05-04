@@ -4,7 +4,7 @@ import { resolve, join } from 'node:path'
 
 const seaConfig = {
   main: './app.cjs',
-  output:'./app.blob',
+  output: './app.blob',
   disableExperimentalSEAWarning: true,
   useCodeCache: false,
   useSnapshot: false
@@ -19,7 +19,7 @@ try {
       recursive: true
     })
   }
-} catch(_err) {}
+} catch (_err) {}
 
 await mkdir(inputFolder)
 

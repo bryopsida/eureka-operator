@@ -1,0 +1,7 @@
+eureka_operator_user_name: eureka
+eureka_operator_service_folder: /opt/eureka/operator
+eureka_operator_port: 51515
+eureka_operator_multicast: '240.0.0.1'
+eureka_operator_salt: ~
+eureka_operator_password: ~
+eureka_operator_uid: 10001

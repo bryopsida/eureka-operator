@@ -6,6 +6,7 @@
   "bin": "eureka-operator",
   "type": "module",
   "scripts": {
+    "test": "node --test tests/* tests/**/*  tests/**/**/*",
     "start:dev": "nodemon --inspect src/app.mjs",
     "lint": "standard",
     "lint:fix": "standard --fix",

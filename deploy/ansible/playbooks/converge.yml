@@ -1,0 +1,5 @@
+---
+- name: Manage eureka-operators
+  hosts: eureka-operators
+  roles:
+    - eureka-operator

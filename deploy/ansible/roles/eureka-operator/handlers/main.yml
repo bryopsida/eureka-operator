@@ -1,0 +1,9 @@
+---
+- name: Reload systemd
+  become: true
+  ansible.builtin.systemd:
+    daemon_reload: yes
+- name: Reload AppArmor
+  become: true
+  ansible.builtin.shell:
+    cmd: systemctl reload apparmor

@@ -1,0 +1,7 @@
+---
+- name: Check Access
+  hosts: all
+  tasks:
+  - name: Debug facts
+    ansible.builtin.debug:
+      msg: "{{ ansible_facts }}"

@@ -1,0 +1,13 @@
+[Unit]
+Description=Eureka System Operator
+
+[Service]
+WorkingDirectory={{ eureka_operator_service_folder }}
+ExecStart={{ eureka_operator_service_folder }}/app.cjs
+Type=simple
+Restart=always
+RestartSec=10
+Environment="EUREKA_UID={{ eureka_operator_uid }}"
+
+[Install]
+WantedBy = multi-user.target

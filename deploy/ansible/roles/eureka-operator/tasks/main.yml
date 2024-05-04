@@ -1,0 +1,73 @@
+---
+- name: Create a service account user
+  become: true
+  ansible.builtin.user:
+    name: "{{ eureka_operator_user_name }}"
+    shell: /sbin/nologin
+    state: present
+    uid: "{{ eureka_operator_uid }}"
+- name: Create service folder
+  become: true
+  ansible.builtin.file:
+    path: "{{ eureka_operator_service_folder }}"
+    state: directory
+    mode: '0750'
+    owner: "{{ eureka_operator_user_name }}"
+- name: Copy App
+  become: true
+  ansible.builtin.copy:
+    src: ../../../../../node/dist/app.cjs
+    dest: "{{ eureka_operator_service_folder }}/app.cjs"
+    owner: "{{ eureka_operator_user_name }}"
+    group: root
+    mode: '550'
+- name: Render systemd unit
+  become: true
+  ansible.builtin.template:
+    src: service.j2
+    dest: /etc/systemd/system/eureka-operator.service
+    mode: '0650'
+  notify:
+    - Reload systemd
+
+- name: Ensure app.cjs is executable
+  become: true
+  ansible.builtin.file:
+    path: "{{ eureka_operator_service_folder }}/app.cjs"
+    mode: '0550'
+- name: Ensure config folder exists
+  become: true
+  ansible.builtin.file:
+    path: "{{ eureka_operator_service_folder }}/config"
+    state: directory
+    mode: '0750'
+    owner: "{{ eureka_operator_user_name }}"
+- name: Render Configuration File
+  become: true
+  ansible.builtin.template:
+    src: config.json.j2
+    dest: "{{ eureka_operator_service_folder }}/config/eureka.config.json"
+    mode: '0660'
+    owner: "{{ eureka_operator_user_name }}"
+- name: Render AppArmor profile
+  become: true
+  ansible.builtin.template:
+    src: apparmor.j2
+    dest: /etc/apparmor.d/eureka-operator
+  notify:
+    - Reload AppArmor
+- name: Load the AppArmor profile
+  ansible.builtin.shell:
+    cmd: apparmor_parser -r /etc/apparmor.d/eureka-operator
+  become: true
+- name: Enable and start service
+  become: true
+  ansible.builtin.service:
+    name: eureka-operator
+    state: started
+    enabled: yes
+- name: Restart service
+  become: true
+  ansible.builtin.service:
+    name: eureka-operator
+    state: restarted
