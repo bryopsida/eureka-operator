@@ -2,8 +2,12 @@ import { UbuntuProManager } from './managers/ubuntu/pro-manager.mjs'
 import { OperatorConfig } from './state/operator-config.mjs'
 import { EurekaOperatorComms } from './transports/multicast-comms.mjs'
 import { AptManager } from './managers/packages/apt-manager.mjs'
+import { DownloadManager } from './managers/files/download-manager.mjs'
+import { RebootManager } from './managers/ubuntu/reboot-manager.mjs'
 
 export class EurekaOperator {
+  #messages = []
+
   constructor (options) {
     if (!options.configManager) throw new Error('options.configManager must be defined!')
     if (!(options.configManager instanceof OperatorConfig)) throw new Error('expect options.configManager to be a OperatorConfig!')
@@ -17,18 +21,35 @@ export class EurekaOperator {
     if (!(options.aptManager)) throw new Error('options.aptManager must be defiend!')
     if (!(options.aptManager instanceof AptManager)) throw new Error('options.aptManager must be an instance of AptManager!')
 
+    if (!options.downloadManager) throw new Error('options.downloadManager must be defined!')
+    if (!(options.downloadManager instanceof DownloadManager)) throw new Error('options.downloadManager must be an instance of DownloadManager!')
+
+    if (!options.rebootManager) throw new Error('options.rebootManager must be defined!')
+    if (!(options.rebootManager instanceof RebootManager)) throw new Error('options.rebootManager must be an instance of RebootManager!')
+
     this.comms = options.comms
     this.configManager = options.configManager
     this.ubuntuProManager = options.ubuntuProManager
     this.aptManager = options.aptManager
+    this.downloadManager = options.downloadManager
+    this.rebootManager = options.rebootManager
 
     this.comms.on('message', async (msg) => {
-      console.log(msg)
       await this.onMessage(msg)
     })
+
+    this.msgProcessInterval = setInterval(this.emptyMessageQueue.bind(this), 1000)
   }
 
-  async onMessage (msg) {
+  async emptyMessageQueue () {
+    const messages = this.#messages
+    this.#messages = []
+    for (const msg of messages) {
+      await this.processMessage(msg)
+    }
+  }
+
+  async processMessage (msg) {
     try {
       if (msg.ubuntu) {
         if (msg.ubuntu.pro) await this.ubuntuProManager.ensureMachineIsAttached(msg.ubuntu.pro)
@@ -37,12 +58,21 @@ export class EurekaOperator {
         console.log('ensuring packages are installed ', msg.apt)
         await this.aptManager.ensurePackagesAreInstalled(msg.apt)
       }
+      if (msg.downloads && Array.isArray(msg.downloads)) {
+        await this.downloadManager.ensureFilesAreDownloaded(msg.downloads)
+      }
     } catch (err) {
       console.error('Error while processing msg: ', err)
     }
   }
 
-  async cleanup () {
+  async onMessage (msg) {
+    this.#messages.push(msg)
+  }
 
+  async cleanup () {
+    if (this.msgProcessInterval) {
+      clearInterval(this.msgProcessInterval)
+    }
   }
 }

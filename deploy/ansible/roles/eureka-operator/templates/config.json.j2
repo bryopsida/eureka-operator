@@ -18,5 +18,8 @@
     {%- if eureka_operator_apt_packages is defined -%}
     ,"apt": {{ eureka_operator_apt_packages | to_json }}
     {%- endif %}
+    {%- if eureka_operator_downloads is defined -%}
+    ,"downloads": {{ eureka_operator_downloads | to_json }}
+    {%- endif %}
   }
 }

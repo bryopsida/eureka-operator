@@ -1,4 +1,4 @@
-ANSIBLE_INVENTORY ?= inventory/local.ini
+ANSIBLE_INVENTORY ?= inventory/exmplae.yaml
 
 eureka-operators:
 	ansible-playbook -i $(ANSIBLE_INVENTORY) playbooks/converge.yml

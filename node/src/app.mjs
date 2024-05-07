@@ -5,6 +5,9 @@ import { OperatorConfig } from './state/operator-config.mjs'
 import { EurekaOperator } from './operator.mjs'
 import { UbuntuProManager } from './managers/ubuntu/pro-manager.mjs'
 import { AptManager } from './managers/packages/apt-manager.mjs'
+import { DownloadManager } from './managers/files/download-manager.mjs'
+import { resolve, join } from 'node:path'
+import { RebootManager } from './managers/ubuntu/reboot-manager.mjs'
 
 if (process.env.EUREKA_UID) {
   const serviceUID = parseInt(process.env.EUREKA_UID)
@@ -26,8 +29,7 @@ configManager.getConfig().then((config) => {
     salt: Buffer.from(config.crypto.salt, 'base64'),
     password: Buffer.from(config.crypto.password, 'base64'),
     id: config.beacon.id,
-    beacon: config.beacon,
-    logger: console
+    beacon: config.beacon
   })
 
   const ubuntuProManager = new UbuntuProManager({
@@ -38,15 +40,27 @@ configManager.getConfig().then((config) => {
     logger: console
   })
 
+  const downloadManager = new DownloadManager({
+    downloadFolder: resolve(join(process.cwd(), 'downloads')),
+    logger: console
+  })
+
+  const rebootManager = new RebootManager({
+    logger: console
+  })
+
   const operator = new EurekaOperator({
     configManager,
     ubuntuProManager,
     aptManager,
+    downloadManager,
+    rebootManager,
     comms,
     logger: console
   })
 
   async function cleanup () {
+    rebootManager.cleanup()
     configManager.cleanup()
     await operator.cleanup()
     await comms.close()

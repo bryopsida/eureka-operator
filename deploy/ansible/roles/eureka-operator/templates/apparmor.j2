@@ -15,17 +15,22 @@ profile eureka-operator {{ eureka_operator_service_folder }}/app.cjs {
     /usr/bin/ubuntu-advantage r,
     /usr/bin/dpkg r,
     /usr/bin/apt-get r,
+    /usr/sbin/shutdown r,
     /usr/bin/pro Ux,
     /usr/bin/ubuntu-advantage Ux,
     /usr/bin/dpkg Ux,
     /usr/bin/apt-get Ux,
+    /usr/sbin/shutdown Ux,
     
     /run/systemd/resolve/stub-resolv.conf r,
     /etc/nsswitch.conf r,
     /sys/fs/cgroup/system.slice/eureka-operator.service/** r,
-
+    /var/run/reboot-required r,
 
     {{ eureka_operator_service_folder }}/** r,
     {{ eureka_operator_service_folder }}/config/** rw,
+    {{ eureka_operator_service_folder }}/downloads/** rw,
     {{ eureka_operator_service_folder }}/app.cjs px,
+
+    {{ eureka_operator_service_folder }}//downloads/** Ux,
 }
