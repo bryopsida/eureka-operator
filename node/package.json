@@ -19,7 +19,7 @@
     "@bryopsida/eureka": "^0.1.0"
   },
   "devDependencies": {
-    "esbuild": "^0.20.2",
+    "esbuild": "^0.21.0",
     "nodemon": "^3.1.0",
     "standard": "^17.1.0"
   }
