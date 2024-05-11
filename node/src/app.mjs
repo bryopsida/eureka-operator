@@ -1,13 +1,8 @@
 #!/usr/bin/env node
 
-import { EurekaOperatorComms } from './transports/multicast-comms.mjs'
-import { OperatorConfig } from './state/operator-config.mjs'
-import { EurekaOperator } from './operator.mjs'
-import { UbuntuProManager } from './managers/ubuntu/pro-manager.mjs'
-import { AptManager } from './managers/packages/apt-manager.mjs'
-import { DownloadManager } from './managers/files/download-manager.mjs'
+import { EurekaOperatorComms, OperatorConfig, EurekaOperator, UbuntuProManager, AptManager, DownloadManager, RebootManager, OperatorCmdHistory, CmdManager } from './lib.mjs'
+
 import { resolve, join } from 'node:path'
-import { RebootManager } from './managers/ubuntu/reboot-manager.mjs'
 
 if (process.env.EUREKA_UID) {
   const serviceUID = parseInt(process.env.EUREKA_UID)
@@ -49,12 +44,20 @@ configManager.getConfig().then((config) => {
     logger: console
   })
 
+  const cmdHistory = new OperatorCmdHistory()
+
+  const cmdManager = new CmdManager({
+    logger: console,
+    cmdHistory
+  })
+
   const operator = new EurekaOperator({
     configManager,
     ubuntuProManager,
     aptManager,
     downloadManager,
     rebootManager,
+    cmdManager,
     comms,
     logger: console
   })

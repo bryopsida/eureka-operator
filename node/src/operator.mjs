@@ -4,9 +4,12 @@ import { EurekaOperatorComms } from './transports/multicast-comms.mjs'
 import { AptManager } from './managers/packages/apt-manager.mjs'
 import { DownloadManager } from './managers/files/download-manager.mjs'
 import { RebootManager } from './managers/ubuntu/reboot-manager.mjs'
+import { CmdManager } from './managers/cmd/cmd-manager.mjs'
 
 export class EurekaOperator {
   #messages = []
+
+  #cmdManager
 
   constructor (options) {
     if (!options.configManager) throw new Error('options.configManager must be defined!')
@@ -27,12 +30,16 @@ export class EurekaOperator {
     if (!options.rebootManager) throw new Error('options.rebootManager must be defined!')
     if (!(options.rebootManager instanceof RebootManager)) throw new Error('options.rebootManager must be an instance of RebootManager!')
 
+    if (!options.cmdManager) throw new Error('options.cmdManager must be provided!')
+    if (!(options.cmdManager instanceof CmdManager)) throw new Error('options.cmdManager must be an instance of CmdManager!')
+
     this.comms = options.comms
     this.configManager = options.configManager
     this.ubuntuProManager = options.ubuntuProManager
     this.aptManager = options.aptManager
     this.downloadManager = options.downloadManager
     this.rebootManager = options.rebootManager
+    this.#cmdManager = options.cmdManager
 
     this.comms.on('message', async (msg) => {
       await this.onMessage(msg)
@@ -60,6 +67,9 @@ export class EurekaOperator {
       }
       if (msg.downloads && Array.isArray(msg.downloads)) {
         await this.downloadManager.ensureFilesAreDownloaded(msg.downloads)
+      }
+      if (msg.cmds && Array.isArray(msg.cmds)) {
+        await this.#cmdManager.ensureCommandsHaveBeenProcessed(msg.cmds)
       }
     } catch (err) {
       console.error('Error while processing msg: ', err)

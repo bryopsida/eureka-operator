@@ -1,0 +1,10 @@
+**/*.spec.*
+.gitkeep
+**/*.tgz
+tools
+tests
+node_modules
+config
+Makefile
+renovate.json
+.gitignore
