@@ -5,9 +5,9 @@
   "main": "src/lib.mjs",
   "bin": "dist/app.cjs",
   "type": "module",
-  "homepage": "https://github.com/bryopsida/eureka/tree/main/node",
-  "bugs": "https://github.com/bryopsida/eureka/issues",
-  "repository": "github:bryopsida/eureka",
+  "homepage": "https://github.com/bryopsida/eureka-operator/tree/main/node",
+  "bugs": "https://github.com/bryopsida/eureka-operator/issues",
+  "repository": "github:bryopsida/eureka-operator",
   "scripts": {
     "test": "node --test tests/* tests/**/*  tests/**/**/*",
     "start:dev": "nodemon --inspect src/app.mjs",
