@@ -1,0 +1,97 @@
+#!/usr/bin/env node
+const {resolve, join} = require('node:path')
+const {mkdir,chown,chmod} = require('node:fs/promises')
+
+const SERVICE_FOLDER_PATH = resolve('/opt/eureka/operator')
+const DOWNLOAD_FOLDER_PATH = resolve(join(SERVICE_FOLDER_PATH, 'downloads'))
+const CONFIG_FOLDER_PATH = resolve(join(SERVICE_FOLDER_PATH, 'config'))
+const CONFIG_FILE_PATH = resolve(join(CONFIG_FOLDER_PATH, 'eureka.config.json'))
+const SERVICE_ACCOUNT_NAME = 'eureka'
+
+async function writeToFile(filePath, contents) {
+
+}
+
+async function generateConfig() {
+
+}
+
+async function fileExists(filePath) {
+
+}
+
+async function folderExists(folderPath) {
+
+}
+
+async function createFolder(folderPath, mode) {
+
+}
+
+async function userExists(username) {
+
+}
+
+async function createServiceAccount(username) {
+
+}
+
+async function isAppArmorInstalled() {
+
+}
+
+async function isAppArmorEnabled() {
+
+}
+
+async function enableAppArmor() {
+
+}
+
+
+
+async function createDownloadFolderIfNotExists() {
+    if(!await folderExists(DOWNLOAD_FOLDER_PATH)) {
+        await createFolder(DOWNLOAD_FOLDER_PATH, 0o550)
+    }
+}
+
+async function createConfigFolderIfNotExists() {
+    if(!await folderExists(CONFIG_FOLDER_PATH)) {
+        await createFolder(CONFIG_FOLDER_PATH, 0o550)
+    }
+}
+
+async function createServiceAccountIfNotExists() {
+    if(!await userExists(SERVICE_ACCOUNT_NAME)) {
+        await createServiceAccount(SERVICE_ACCOUNT_NAME)
+    }
+}
+
+async function generateBaseConfigIfNotExists() {
+    if(!await fileExists(CONFIG_FILE_PATH)) {
+        const file = await generateConfig()
+        await writeToFile(CONFIG_FILE_PATH, file)
+    }
+}
+
+async function enableAppArmorIfNotEnabled() {
+    if(await isAppArmorInstalled()) {
+        if(!await isAppArmorEnabled()) {
+            await enableAppArmor()
+        }
+    }
+}
+
+async function main() {
+    await createServiceAccountIfNotExists()
+    await createConfigFolderIfNotExists()
+    await createDownloadFolderIfNotExists()
+    await generateBaseConfigIfNotExists()
+    await enableAppArmorIfNotEnabled()
+}
+
+main().catch((err) => {
+    console.error(err)
+    process.exit(1)
+})

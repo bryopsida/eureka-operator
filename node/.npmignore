@@ -2,9 +2,12 @@
 .gitkeep
 **/*.tgz
 tools
+hooks
+pkg
 tests
 node_modules
 config
 Makefile
 renovate.json
 .gitignore
+deb

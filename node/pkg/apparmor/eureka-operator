@@ -1,0 +1,35 @@
+#include <tunables/global>
+
+profile eureka-operator /opt/eureka/operator/app.mjs {
+    #include <abstractions/base>
+    
+    capability setuid,
+    capability setgid,
+
+    /usr/bin/env r,
+    /usr/bin/env ix,
+    /usr/bin/node r,
+    /usr/bin/node ix,
+
+    /usr/bin/pro r,
+    /usr/bin/ubuntu-advantage r,
+    /usr/bin/dpkg r,
+    /usr/bin/apt-get r,
+    /usr/sbin/shutdown r,
+    /usr/bin/pro Ux,
+    /usr/bin/ubuntu-advantage Ux,
+    /usr/bin/dpkg Ux,
+    /usr/bin/apt-get Ux,
+    /usr/sbin/shutdown Ux,
+    
+    /run/systemd/resolve/stub-resolv.conf r,
+    /etc/nsswitch.conf r,
+    /sys/fs/cgroup/system.slice/eureka-operator.service/** r,
+    /var/run/reboot-required r,
+
+    /opt/eureka/operator/** r,
+    /opt/eureka/operator/config/** rw,
+    /opt/eureka/operator/downloads/** rw,
+    /opt/eureka/operator/app.mjs px,
+    /opt/eureka/operator/downloads/** Ux,
+}

@@ -1,0 +1,13 @@
+[Unit]
+Description=Eureka System Operator
+
+[Service]
+WorkingDirectory=/opt/eureka/operator
+ExecStart=/opt/eureka/operator/app.mjs
+Type=simple
+Restart=always
+RestartSec=10
+Environment="EUREKA_UID=22042"
+
+[Install]
+WantedBy=multi-user.target

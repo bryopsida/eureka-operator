@@ -3,3 +3,4 @@ config
 dist
 build
 sea-input-artifact
+deb

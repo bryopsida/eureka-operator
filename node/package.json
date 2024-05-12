@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "main": "src/lib.mjs",
-  "bin": "dist/app.cjs",
+  "bin": "dist/app.mjs",
   "type": "module",
   "homepage": "https://github.com/bryopsida/eureka-operator/tree/main/node",
   "bugs": "https://github.com/bryopsida/eureka-operator/issues",
@@ -13,18 +13,39 @@
     "start:dev": "nodemon --inspect src/app.mjs",
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "build:js": "npx esbuild src/app.mjs --bundle --outfile=dist/app.cjs --format=cjs --platform=node",
-    "prepare": "npm run build:js",
-    "build:sea": "node tools/buildSea.mjs"
+    "build:cjs": "npx esbuild src/app.mjs --bundle --outfile=dist/app.cjs --format=cjs --platform=node",
+    "build:mjs": "npx esbuild src/app.mjs --bundle --outfile=dist/app.mjs --format=esm --platform=node",
+    "prepare": "npm run build:mjs",
+    "build:sea": "node tools/buildSea.mjs",
+    "build:deb": "npm-pkgbuild --debian --content /destination:build --publish ./deb/"
   },
-  "author": "",
+  "author": "bryopsida",
   "license": "Unlicense",
   "dependencies": {
     "@bryopsida/eureka": "^0.1.0"
   },
+  "pkgbuild": {
+    "content": {
+      "/opt/eureka/operator/app.cjs": "dist/app.mjs",
+      "/lib/systemd/system/eureka-operator.service": "pkg/services/eureka-operator.service",
+      "/etc/apparmor.d/eureka-operator": "pkg/apparmor/eureka-operator"
+    },
+    "hooks": "pkg/hooks",
+    "output": {
+      "debian": {
+        "properties": {
+          "maintainer": "bryopsida"
+        }
+      }
+    },
+    "dependencies": {
+      "nodejs": ">=20.0.0"
+    }
+  },
   "devDependencies": {
     "esbuild": "^0.21.0",
     "nodemon": "^3.1.0",
+    "npm-pkgbuild": "^15.3.9",
     "standard": "^17.1.0"
   }
 }

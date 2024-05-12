@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+const {execSync} = require('node:child_process')
+
+async function enableServiceIfNotEnabled() {
+    execSync('systemctl enable eureka-operator', {
+        shell: true,
+        timeout: 10000
+    })
+}
+
+async function startServiceIfNotRunning() {
+    execSync('systemctl start eureka-operator', {
+        shell: true,
+        timeout: 10000
+    })
+}
+
+async function main() {
+    await enableServiceIfNotEnabled()
+    await startServiceIfNotRunning()
+}
+
+main().catch((err) => {
+    console.error(err)
+    process.exit(1)
+})

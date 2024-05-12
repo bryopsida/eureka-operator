@@ -28,7 +28,7 @@ jobs:
         run: npm ci
       - name: Build JS Bundle
         working-directory: node
-        run: npm run build:js
+        run: npm run build:cjs
       - name: Build artifact for SEA build process
         working-directory: node
         run: tools/buildSea.mjs
