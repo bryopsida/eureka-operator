@@ -3,8 +3,16 @@
     "build": {
         "dockerfile": "Dockerfile"
     },
-    "mounts": ["source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"],
-    "runArgs": ["--add-host=host.docker.internal:host-gateway"],
+    "features": {
+      "ghcr.io/devcontainers/features/common-utils:2": {},
+      "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+      "ghcr.io/devcontainers/features/github-cli:1": {},
+      "ghcr.io/devcontainers/features/node:1": {},
+      "ghcr.io/devcontainers-contrib/features/ansible:2": {},
+      "ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
+        "packages": "net-tools,iputils-ping,build-essential"
+      }
+    },
     "customizations": {
       "vscode": {
         "extensions": [

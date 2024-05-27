@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const {resolve, join} = require('node:path')
-const {mkdir,chown,chmod} = require('node:fs/promises')
+const {mkdir,chown,chmod, writeFile} = require('node:fs/promises')
 
 const SERVICE_FOLDER_PATH = resolve('/opt/eureka/operator')
 const DOWNLOAD_FOLDER_PATH = resolve(join(SERVICE_FOLDER_PATH, 'downloads'))
@@ -9,11 +9,16 @@ const CONFIG_FILE_PATH = resolve(join(CONFIG_FOLDER_PATH, 'eureka.config.json'))
 const SERVICE_ACCOUNT_NAME = 'eureka'
 
 async function writeToFile(filePath, contents) {
-
+    await writeFile(filePath, contents, {
+        encoding: 'utf8'
+    })
 }
 
 async function generateConfig() {
-
+    const config = {
+        
+    }
+    return JSON.stringify(config, null, 2)
 }
 
 async function fileExists(filePath) {
