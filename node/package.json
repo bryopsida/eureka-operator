@@ -22,7 +22,7 @@
   "author": "bryopsida",
   "license": "Unlicense",
   "dependencies": {
-    "@bryopsida/eureka": "^0.1.0"
+    "@bryopsida/eureka": "^0.2.0"
   },
   "pkgbuild": {
     "content": {
