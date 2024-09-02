@@ -1,33 +1,36 @@
 {
-    "name": "Node.js",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
-    "features": {
-      "ghcr.io/devcontainers/features/common-utils:2": {},
-      "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+  "name": "Eureka Operator Dev Container",
+  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:22-bookworm",
+  "features": {
       "ghcr.io/devcontainers/features/github-cli:1": {},
-      "ghcr.io/devcontainers/features/node:1": {},
+      "ghcr.io/devcontainers/features/common-utils:2": {},
+      "ghcr.io/devcontainers-contrib/features/prettier:1": {},
       "ghcr.io/devcontainers-contrib/features/ansible:2": {},
       "ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
         "packages": "net-tools,iputils-ping,build-essential"
       }
-    },
-    "customizations": {
+  },
+  "customizations": {
       "vscode": {
-        "extensions": [
-        ],
-        "settings": {
-          "terminal.integrated.profiles.linux": {
-            "zsh": {
-              "path": "/usr/bin/zsh"
-            }
-          },
-          "terminal.integrated.defaultProfile.linux": "zsh"
-        }
+          "extensions": [
+              "github.vscode-pull-request-github",
+              "github.vscode-github-actions",
+              "johnpapa.vscode-peacock",
+              "ms-vscode.makefile-tools"
+          ],
+          "settings": {
+              "editor.tabSize": 2,
+              "terminal.integrated.defaultProfile.linux": "zsh",
+              "terminal.integrated.profiles.linux": {
+                  "bash": {
+                      "path": "bash",
+                      "icon": "terminal-bash"
+                  },
+                  "zsh": {
+                      "path": "zsh"
+                  }
+              }
+          }
       }
-    },
-    "forwardPorts": [
-      3000
-    ]
   }
+}
