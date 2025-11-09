@@ -43,7 +43,7 @@
     }
   },
   "devDependencies": {
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.26.0",
     "nodemon": "^3.1.0",
     "npm-pkgbuild": "^19.0.0",
     "standard": "^17.1.0"
