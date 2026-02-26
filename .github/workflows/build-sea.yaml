@@ -34,7 +34,7 @@ jobs:
         run: tools/buildSea.mjs
       - name: Upload artifact
         id: upload
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: sea-input
           path: node/sea-input-artifact
